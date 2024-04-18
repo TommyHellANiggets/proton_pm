@@ -1,0 +1,343 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proton-pm | Главная</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <sidebar>
+        <div class="sidebar expanded" style="height: 1800px;">
+            <div class="toggle-btn" onclick="toggleSidebar()" style="margin-top: -5px;">
+                <i class="bi bi-x"></i>
+            </div>
+            <div class="sidebar-buttons-container" style="margin-top: 120px">
+                <button class="sidebar-btn" onclick="goToTerminal()">
+                    <svg width="23" height="19" viewBox="0 0 23 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.5 0.5H2.5C1.2625 0.5 0.26125 1.5125 0.26125 2.75L0.25 16.25C0.25 17.4875 1.2625 18.5 2.5 18.5H20.5C21.7375 18.5 22.75 17.4875 22.75 16.25V2.75C22.75 1.5125 21.7375 0.5 20.5 0.5ZM2.5 6.125H14.3125V10.0625H2.5V6.125ZM2.5 12.3125H14.3125V16.25H2.5V12.3125ZM20.5 16.25H16.5625V6.125H20.5V16.25Z" fill="#545454"/>
+                    </svg>                        
+                    <span style="font-weight: 600;" class="text-nowrap">Выбор терминала</span>
+                </button>
+                <button class="sidebar-btn active_page"  onclick="goToHome()">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.81818 3.63636H0V18.1818C0 19.1818 0.818182 20 1.81818 20H16.3636V18.1818H1.81818V3.63636ZM18.1818 0H5.45455C4.45455 0 3.63636 0.818182 3.63636 1.81818V14.5455C3.63636 15.5455 4.45455 16.3636 5.45455 16.3636H18.1818C19.1818 16.3636 20 15.5455 20 14.5455V1.81818C20 0.818182 19.1818 0 18.1818 0ZM18.1818 14.5455H5.45455V1.81818H18.1818V14.5455Z" fill="#545454"/>
+                    </svg>                        
+                    <span style="font-weight: 600;">Страницы</span>
+                </button>
+                <button class="sidebar-btn" onclick="goToLoad_Photo()">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 14V2C20 0.9 19.1 0 18 0H6C4.9 0 4 0.9 4 2V14C4 15.1 4.9 16 6 16H18C19.1 16 20 15.1 20 14ZM9 10L11.03 12.71L14 9L18 14H6L9 10ZM0 4V18C0 19.1 0.9 20 2 20H16V18H2V4H0Z" fill="#545454"/>
+                    </svg>                        
+                    <span style="font-weight: 600;">Фотогалерея</span>
+                </button>
+                <button class="sidebar-btn">
+                    <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.8571 6.36364C10.8571 5.86156 10.4501 5.45455 9.94805 5.45455H9.05195C8.54987 5.45455 8.14286 5.86156 8.14286 6.36364C8.14286 6.86571 8.54987 7.27273 9.05195 7.27273H9.94805C10.4501 7.27273 10.8571 6.86571 10.8571 6.36364ZM10.8571 10.4481C10.8571 9.69852 10.2495 9.09091 9.5 9.09091C8.75047 9.09091 8.14286 9.69852 8.14286 10.4481V13.1883C8.14286 13.9378 8.75047 14.5455 9.5 14.5455C10.2495 14.5455 10.8571 13.9378 10.8571 13.1883V10.4481ZM7 0C3.13401 0 0 3.13401 0 7V13C0 16.866 3.13401 20 7 20H12C15.866 20 19 16.866 19 13V7C19 3.13401 15.866 0 12 0H7ZM16.2857 10C16.2857 13.5145 13.4366 16.3636 9.92208 16.3636H9.07792C5.56338 16.3636 2.71429 13.5145 2.71429 10C2.71429 6.48546 5.56338 3.63636 9.07792 3.63636H9.92208C13.4366 3.63636 16.2857 6.48546 16.2857 10Z" fill="#545454"/>
+                    </svg>                        
+                    <span style="font-weight: 600;">Объявления</span>
+                </button>
+                <button class="sidebar-btn" style="color: #CCCCCC;">
+                    <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.8026 12.3201L14.2755 9.77405C14.3702 9.61623 14.3281 9.41633 14.1913 9.3006L12.6342 8.08016C12.6658 7.8487 12.6868 7.60671 12.6868 7.36473C12.6868 7.12275 12.6658 6.88076 12.6342 6.63878L14.1913 5.41834C14.3281 5.30261 14.3702 5.10271 14.2755 4.94489L12.8026 2.3988C12.7079 2.24098 12.5185 2.17786 12.3502 2.24098L10.5195 2.97745C10.1407 2.68287 9.73043 2.44088 9.27802 2.2515L9.00448 0.30511C8.97291 0.136774 8.8151 0 8.63624 0H5.69035C5.51149 0 5.35367 0.136773 5.32211 0.315631L5.04856 2.26202C4.60668 2.4514 4.18584 2.69339 3.80708 2.98798L1.97642 2.2515C1.80808 2.18838 1.6187 2.2515 1.52401 2.40932L0.0510675 4.95541C-0.0436218 5.11323 -0.0015375 5.31313 0.135236 5.42886L1.69235 6.6493C1.66079 6.88076 1.63975 7.12275 1.63975 7.36473C1.63975 7.60671 1.66079 7.8487 1.69235 8.09068L0.135236 9.31112C-0.0015375 9.42685 -0.0436218 9.62675 0.0510675 9.78457L1.52401 12.3307C1.6187 12.4885 1.80808 12.5516 1.97642 12.4885L3.80708 11.752C4.18584 12.0466 4.59616 12.2886 5.04856 12.478L5.32211 14.4243C5.35367 14.5927 5.51149 14.7295 5.69035 14.7295H8.63624C8.8151 14.7295 8.97291 14.5927 9.00448 14.4138L9.27802 12.4674C9.71991 12.2781 10.1407 12.0361 10.5195 11.7415L12.3502 12.478C12.5185 12.5411 12.7079 12.478 12.8026 12.3201ZM7.16329 9.46894C6.00598 9.46894 5.05908 8.52204 5.05908 7.36473C5.05908 6.20742 6.00598 5.26052 7.16329 5.26052C8.32061 5.26052 9.2675 6.20742 9.2675 7.36473C9.2675 8.52204 8.32061 9.46894 7.16329 9.46894Z" fill="#CCCCCC"/>
+                        <path d="M20.9565 17.5386L19.9464 16.76C19.9675 16.6127 19.9885 16.4549 19.9885 16.2971C19.9885 16.1393 19.978 15.9815 19.9464 15.8342L20.9459 15.0556C21.0301 14.982 21.0617 14.8557 20.9986 14.7505L20.0517 13.1197C19.9991 13.0145 19.8728 12.983 19.7571 13.0145L18.5892 13.488C18.3472 13.2986 18.0842 13.1408 17.7896 13.0251L17.6108 11.7836C17.6003 11.6573 17.495 11.5732 17.3898 11.5732H15.5066C15.3908 11.5732 15.2856 11.6573 15.2751 11.7731L15.0962 13.0145C14.8122 13.1408 14.5386 13.2881 14.2966 13.4775L13.1288 13.004C13.0236 12.9619 12.8973 13.004 12.8342 13.1092L11.8873 14.74C11.8347 14.8452 11.8452 14.9714 11.9399 15.0451L12.9394 15.8237C12.9184 15.9709 12.9079 16.1288 12.9079 16.2866C12.9079 16.4444 12.9184 16.6022 12.9394 16.7495L11.9399 17.5281C11.8558 17.6017 11.8242 17.728 11.8873 17.8332L12.8342 19.4639C12.8868 19.5691 13.0131 19.6007 13.1288 19.5691L14.2966 19.0957C14.5386 19.2851 14.8017 19.4429 15.0962 19.5586L15.2751 20.8001C15.2961 20.9158 15.3908 21 15.5066 21H17.3898C17.5056 21 17.6108 20.9158 17.6213 20.8001L17.8002 19.5586C18.0842 19.4324 18.3578 19.2851 18.5892 19.0957L19.7676 19.5691C19.8728 19.6112 19.9991 19.5691 20.0622 19.4639L21.0091 17.8332C21.0722 17.7385 21.0406 17.6122 20.9565 17.5386ZM16.4429 17.7069C15.6644 17.7069 15.0226 17.0757 15.0226 16.2866C15.0226 15.4975 15.6539 14.8662 16.4429 14.8662C17.232 14.8662 17.8633 15.4975 17.8633 16.2866C17.8633 17.0757 17.2215 17.7069 16.4429 17.7069Z" fill="#CCCCCC"/>
+                    </svg>                        
+                    <span style="font-weight: 600;">Настройки</span>
+                </button>
+            </div>
+        </div>
+    </sidebar>
+    <div class="horizontal-line"></div>
+    <mainContent class="content">
+        <div class="content-inner">
+            <div class="profile" style="margin-top: -10px;">
+                <img src="{% static 'img/logo.png' %}" alt="Logo" class="logo">
+                <div class="profile">
+                    <div class="profile-info">
+                        <span class="name">Ольга Иванова</span>
+                        <span class="role">Оператор</span>
+                    </div>
+                    <button class="notification-btn" onclick="goToProfile()">
+                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.5 8.5C10.8481 8.5 12.75 6.59812 12.75 4.25C12.75 1.90188 10.8481 0 8.5 0C6.15188 0 4.25 1.90188 4.25 4.25C4.25 6.59812 6.15188 8.5 8.5 8.5ZM8.5 10.625C5.66313 10.625 0 12.0487 0 14.875V17H17V14.875C17 12.0487 11.3369 10.625 8.5 10.625Z" fill="#D9D9D9"/>
+                        </svg>
+                    </button>
+                    <button class="settings-btn">
+                        <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 3.11111L10.872 4.20778L12.936 6.22222H4.8V7.77778H12.936L10.872 9.78444L12 10.8889L16 7L12 3.11111ZM1.6 1.55556H8V0H1.6C0.72 0 0 0.7 0 1.55556V12.4444C0 13.3 0.72 14 1.6 14H8V12.4444H1.6V1.55556Z" fill="#D9D9D9"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="main-con d-flex">
+                <div class="buttons-container">
+                    <button class="btn btn-block" style="background-color: #EFEFEF;">
+                        <svg style="margin-left: -5px;" width="23" height="19" viewBox="0 0 23 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20.5 0.5H2.5C1.2625 0.5 0.26125 1.5125 0.26125 2.75L0.25 16.25C0.25 17.4875 1.2625 18.5 2.5 18.5H20.5C21.7375 18.5 22.75 17.4875 22.75 16.25V2.75C22.75 1.5125 21.7375 0.5 20.5 0.5ZM2.5 6.125H14.3125V10.0625H2.5V6.125ZM2.5 12.3125H14.3125V16.25H2.5V12.3125ZM20.5 16.25H16.5625V6.125H20.5V16.25Z" fill="#333333" fill-opacity="0.8"/>
+                        </svg>                            
+                        <span style="margin-left: 20px; font-size: 21px;">Терминал ОК</span>
+                        <svg class="dot" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="6" cy="6" r="6" fill="#0DA600"/>
+                        </svg>                            
+                    </button>
+                    <button class="btn btn-block" style="background-color: #FAFAFA; border: 1px solid #CCCCCC">
+                        <svg style="margin-left: -50px;" width="19" height="13" viewBox="0 0 19 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.4 3.71429H0V5.57143H11.4V3.71429ZM11.4 0H0V1.85714H11.4V0ZM15.2 7.42857V3.71429H13.3V7.42857H9.5V9.28571H13.3V13H15.2V9.28571H19V7.42857H15.2ZM0 9.28571H7.6V7.42857H0V9.28571Z" fill="#002D67"/>
+                        </svg>                            
+                        <span style="margin-left: 20px; font-size: 21px;">Добавить раздел</span>
+                    </button>
+                    <div class="about">
+                        <p class="p_hight">О предприятии <img src="{% static "img/pen.svg" %}"></p>
+                        <p class="p_low">Лицензии и сертификаты <img src="{% static "img/pen.svg" %}"></p>
+                        <p class="p_low">История <img src="{% static "img/pen.svg" %}"></p>
+                        <p class="p_low">Промышленный туризм <img src="{% static "img/pen.svg" %}"></p>
+                        <p class="p_hight">Руководство <img src="{% static "img/pen.svg" %}"></p>
+                        <p class="p_hight">Новости <img src="{% static "img/pen.svg" %}"></p>
+                        <p class="p_hight">Карьера <img src="{% static "img/pen.svg" %}"></p>
+                        <p class="p_low">Молодым специалистам <img src="{% static "img/pen.svg" %}"></p>
+                        <p class="p_low">Подготовка кадров <img src="{% static "img/pen.svg" %}"></p>
+                        <p class="p_low">Студентам и школьникам <img src="{% static "img/pen.svg" %}"></p>
+                        <p class="p_hight">Вакансии <img src="{% static "img/pen.svg" %}"></p>
+                        <p class="p_low">Рабочие <img src="{% static "img/pen.svg" %}"></p>
+                        <p class="p_low">Специалисты <img src="{% static "img/pen.svg" %}"></p>
+                        <p class="p_low">Руководители <img src="{% static "img/pen.svg" %}"></p>
+                        <p class="p_hight">Обратная связь <img src="{% static "img/pen.svg" %}"></p>   
+                    </div>
+                    <button class="btn btn-block" style="background-color: #FAFAFA; border: 1px solid #CCCCCC">
+                        <svg style="margin-left: -50px" width="8" height="16" viewBox="0 0 8 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.90909 3.63636V12C6.90909 13.6073 5.60727 14.9091 4 14.9091C2.39273 14.9091 1.09091 13.6073 1.09091 12V2.90909C1.09091 1.90545 1.90545 1.09091 2.90909 1.09091C3.91273 1.09091 4.72727 1.90545 4.72727 2.90909V10.5455C4.72727 10.9455 4.4 11.2727 4 11.2727C3.6 11.2727 3.27273 10.9455 3.27273 10.5455V3.63636H2.18182V10.5455C2.18182 11.5491 2.99636 12.3636 4 12.3636C5.00364 12.3636 5.81818 11.5491 5.81818 10.5455V2.90909C5.81818 1.30182 4.51636 0 2.90909 0C1.30182 0 0 1.30182 0 2.90909V12C0 14.2109 1.78909 16 4 16C6.21091 16 8 14.2109 8 12V3.63636H6.90909Z" fill="#002D67"/>
+                        </svg>                                                                               
+                        <span style="margin-left: 20px; font-size: 21px;">Добавить файл</span>
+                    </button>
+                </div>
+                <div class="editor-container">
+                    <!-- Добавьте иконки сюда -->
+                    <div class="icon-container d-flex justify-content-between">
+                        <div class="group1">
+                            <button class="form_btn" style="margin-left: 20px">
+                                <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 5.82C8.90233 5.24571 9.53488 4.30286 9.53488 3.42857C9.53488 1.49143 7.90698 0 5.81395 0H0V12H6.54884C8.49302 12 10 10.5429 10 8.75143C10 7.44857 9.2 6.33429 8 5.82ZM2.7907 2.14286H5.5814C6.35349 2.14286 6.97674 2.71714 6.97674 3.42857C6.97674 4.14 6.35349 4.71429 5.5814 4.71429H2.7907V2.14286ZM6.04651 9.85714H2.7907V7.28571H6.04651C6.8186 7.28571 7.44186 7.86 7.44186 8.57143C7.44186 9.28286 6.8186 9.85714 6.04651 9.85714Z" fill="#8A8A8A"/>
+                                </svg>                                                        
+                            </button>
+                            <button class="form_btn">
+                                <svg width="9" height="12" viewBox="0 0 9 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 0V2.57143H4.6575L2.0925 9.42857H0V12H6V9.42857H4.3425L6.9075 2.57143H9V0H3Z" fill="#8A8A8A"/>
+                                </svg>
+                            </button>
+                            <button class="form_btn">
+                                <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 10.1111C8.83714 10.1111 11.1429 8.16833 11.1429 5.77778V0H9V5.77778C9 7.17167 7.65429 8.30556 6 8.30556C4.34571 8.30556 3 7.17167 3 5.77778V0H0.857143V5.77778C0.857143 8.16833 3.16286 10.1111 6 10.1111ZM0 11.5556V13H12V11.5556H0Z" fill="#8A8A8A"/>
+                                </svg>                                                                       
+                            </button>
+                        </div>
+                        <div class="group2">
+                            <button class="form_btn">
+                                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2.88889 8.66667V10.1111H10.1111V8.66667H2.88889ZM0 13H13V11.5556H0V13ZM0 7.22222H13V5.77778H0V7.22222ZM2.88889 2.88889V4.33333H10.1111V2.88889H2.88889ZM0 0V1.44444H13V0H0Z" fill="#8A8A8A"/>
+                                </svg>                                                                   
+                            </button>
+                            <button class="form_btn">
+                                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 13H13V11.5556H0V13ZM0 10.1111H13V8.66667H0V10.1111ZM0 7.22222H13V5.77778H0V7.22222ZM0 4.33333H13V2.88889H0V4.33333ZM0 0V1.44444H13V0H0Z" fill="#8A8A8A"/>
+                                </svg>                                                                       
+                            </button>
+                            <button class="form_btn">
+                                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.66667 8.66667H0V10.1111H8.66667V8.66667ZM8.66667 2.88889H0V4.33333H8.66667V2.88889ZM0 7.22222H13V5.77778H0V7.22222ZM0 13H13V11.5556H0V13ZM0 0V1.44444H13V0H0Z" fill="#8A8A8A"/>
+                                </svg>                                                                                    
+                            </button>
+                            <button class="form_btn">
+                                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 13H13V11.5556H0V13ZM4.33333 10.1111H13V8.66667H4.33333V10.1111ZM0 7.22222H13V5.77778H0V7.22222ZM4.33333 4.33333H13V2.88889H4.33333V4.33333ZM0 0V1.44444H13V0H0Z" fill="#8A8A8A"/>
+                                </svg>                                                                                    
+                            </button>
+                        </div>
+                        <div class="group3">
+                            <button class="form_btn">
+                                <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.2973 5.2C0.579459 5.2 0 5.78067 0 6.5C0 7.21933 0.579459 7.8 1.2973 7.8C2.01514 7.8 2.59459 7.21933 2.59459 6.5C2.59459 5.78067 2.01514 5.2 1.2973 5.2ZM1.2973 0C0.579459 0 0 0.580667 0 1.3C0 2.01933 0.579459 2.6 1.2973 2.6C2.01514 2.6 2.59459 2.01933 2.59459 1.3C2.59459 0.580667 2.01514 0 1.2973 0ZM1.2973 10.4C0.579459 10.4 0 10.9893 0 11.7C0 12.4107 0.588108 13 1.2973 13C2.00649 13 2.59459 12.4107 2.59459 11.7C2.59459 10.9893 2.01514 10.4 1.2973 10.4ZM3.89189 12.5667H16V10.8333H3.89189V12.5667ZM3.89189 7.36667H16V5.63333H3.89189V7.36667ZM3.89189 0.433333V2.16667H16V0.433333H3.89189Z" fill="#8A8A8A"/>
+                                </svg>                                                                                 
+                            </button>
+                            <button class="form_btn">
+                                <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 10.5625H1.68421V10.9688H0.842105V11.7812H1.68421V12.1875H0V13H2.52632V9.75H0V10.5625ZM0.842105 3.25H1.68421V0H0V0.8125H0.842105V3.25ZM0 5.6875H1.51579L0 7.39375V8.125H2.52632V7.3125H1.01053L2.52632 5.60625V4.875H0V5.6875ZM4.21053 0.8125V2.4375H16V0.8125H4.21053ZM4.21053 12.1875H16V10.5625H4.21053V12.1875ZM4.21053 7.3125H16V5.6875H4.21053V7.3125Z" fill="#8A8A8A"/>
+                                </svg>                                                                            
+                            </button>
+                        </div>
+                        <div class="group4">
+                            <button class="form_btn">
+                                <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.736 4.8425L3.372 0L2.526 0.76375L3.954 2.05292L0.864 4.8425C0.51 5.16208 0.51 5.67667 0.864 5.99083L4.164 8.97C4.338 9.12708 4.572 9.20833 4.8 9.20833C5.028 9.20833 5.262 9.12708 5.436 8.97L8.736 5.99083C9.09 5.67667 9.09 5.16208 8.736 4.8425ZM1.926 5.41667L4.8 2.82208L7.674 5.41667H1.926ZM10.2 6.22917C10.2 6.22917 9 7.40458 9 8.125C9 8.72083 9.54 9.20833 10.2 9.20833C10.86 9.20833 11.4 8.72083 11.4 8.125C11.4 7.40458 10.2 6.22917 10.2 6.22917ZM0 10.8333H12V13H0V10.8333Z" fill="#8A8A8A"/>
+                                </svg>                                                                            
+                            </button>
+                            <button class="form_btn">
+                                <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 8.90476H13V11H0V8.90476ZM2.2685 7.33333H3.8415L4.667 5.4581H8.3395L9.1585 7.33333H10.7315L7.3125 0H5.6875L2.2685 7.33333ZM5.1415 4.39476L6.461 1.3619H6.539L7.8585 4.39476H5.1415Z" fill="#8A8A8A"/>
+                                </svg>                                                                                    
+                            </button>
+                        </div>
+                        <div class="group5">
+                            <button class="form_btn">
+                                <svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.10526 0H1.15789C0.521053 0 0 0.531818 0 1.18182V9.45455H1.15789V1.18182H8.10526V0ZM9.8421 2.36364H3.47368C2.83684 2.36364 2.31579 2.89545 2.31579 3.54545V11.8182C2.31579 12.4682 2.83684 13 3.47368 13H9.8421C10.4789 13 11 12.4682 11 11.8182V3.54545C11 2.89545 10.4789 2.36364 9.8421 2.36364ZM9.8421 11.8182H3.47368V3.54545H9.8421V11.8182Z" fill="#8A8A8A"/>
+                                </svg>                                                                        
+                            </button>
+                            <button class="form_btn">
+                                <svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.77778 1.18182H7.22333C6.96667 0.496364 6.29444 0 5.5 0C4.70556 0 4.03333 0.496364 3.77667 1.18182H1.22222C0.55 1.18182 0 1.71364 0 2.36364V11.8182C0 12.4682 0.55 13 1.22222 13H9.77778C10.45 13 11 12.4682 11 11.8182V2.36364C11 1.71364 10.45 1.18182 9.77778 1.18182ZM5.5 1.18182C5.83611 1.18182 6.11111 1.44773 6.11111 1.77273C6.11111 2.09773 5.83611 2.36364 5.5 2.36364C5.16389 2.36364 4.88889 2.09773 4.88889 1.77273C4.88889 1.44773 5.16389 1.18182 5.5 1.18182ZM9.77778 11.8182H1.22222V2.36364H2.44444V4.13636H8.55556V2.36364H9.77778V11.8182Z" fill="#8A8A8A"/>
+                                </svg>                                                                               
+                            </button>
+                            <button class="form_btn">
+                                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4.966 3.666C5.1155 3.341 5.2 2.9835 5.2 2.6C5.2 1.1635 4.0365 0 2.6 0C1.1635 0 0 1.1635 0 2.6C0 4.0365 1.1635 5.2 2.6 5.2C2.9835 5.2 3.341 5.1155 3.666 4.966L5.2 6.5L3.666 8.034C3.341 7.8845 2.9835 7.8 2.6 7.8C1.1635 7.8 0 8.9635 0 10.4C0 11.8365 1.1635 13 2.6 13C4.0365 13 5.2 11.8365 5.2 10.4C5.2 10.0165 5.1155 9.659 4.966 9.334L6.5 7.8L11.05 12.35H13V11.7L4.966 3.666ZM2.6 3.9C1.885 3.9 1.3 3.3215 1.3 2.6C1.3 1.8785 1.885 1.3 2.6 1.3C3.315 1.3 3.9 1.8785 3.9 2.6C3.9 3.3215 3.315 3.9 2.6 3.9ZM2.6 11.7C1.885 11.7 1.3 11.1215 1.3 10.4C1.3 9.6785 1.885 9.1 2.6 9.1C3.315 9.1 3.9 9.6785 3.9 10.4C3.9 11.1215 3.315 11.7 2.6 11.7ZM6.5 6.825C6.318 6.825 6.175 6.682 6.175 6.5C6.175 6.318 6.318 6.175 6.5 6.175C6.682 6.175 6.825 6.318 6.825 6.5C6.825 6.682 6.682 6.825 6.5 6.825ZM11.05 0.65L7.15 4.55L8.45 5.85L13 1.3V0.65H11.05Z" fill="#8A8A8A"/>
+                                </svg>                                                                          
+                            </button>
+                        </div>
+                        <div class="group6">
+                            <button class="form_btn">
+                                <svg width="17" height="6" viewBox="0 0 17 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.72008 0.666667C6.5193 0.666667 4.52614 1.32667 2.98974 2.4L0 0V6H7.47435L4.468 3.58667C5.62237 2.81333 7.09233 2.33333 8.72008 2.33333C11.66 2.33333 14.1597 3.87333 15.0318 6L17 5.48C15.8456 2.68667 12.5818 0.666667 8.72008 0.666667Z" fill="#8A8A8A"/>
+                                </svg>                                                                             
+                            </button>
+                            <button class="form_btn" style="margin-right: 20px">
+                                <svg width="17" height="6" viewBox="0 0 17 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14.0088 2.4C12.4717 1.32667 10.4775 0.666667 8.27566 0.666667C4.41202 0.666667 1.14663 2.68667 0 5.48L1.9609 6C2.83333 3.87333 5.326 2.33333 8.27566 2.33333C9.8959 2.33333 11.3749 2.81333 12.5298 3.58667L9.52199 6H17V0L14.0088 2.4Z" fill="#8A8A8A"/>
+                                </svg>                                                                                    
+                            </button>
+                        </div>    
+                    </div>
+                    <textarea class="form-control" rows="10" placeholder=""></textarea>
+                    <div class="confirm-delete d-flex justify-content-end">
+                        <button class="confirm">
+                            <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.44912 14.6786L5.13019 11.258L4 12.4146L8.44912 17L18 7.1566L16.8778 6L8.44912 14.6786Z" fill="#0DA600"/>
+                                <rect x="0.5" y="0.5" width="20" height="20" rx="10" stroke="#0DA600"/>
+                            </svg>                                                                                                    
+                        </button>
+                        <button class="delete">
+                            <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 7.00714L14.9929 6L11 9.99286L7.00714 6L6 7.00714L9.99286 11L6 14.9929L7.00714 16L11 12.0071L14.9929 16L16 14.9929L12.0071 11L16 7.00714Z" fill="#CA0101"/>
+                                <rect x="0.5" y="0.5" width="20" height="20" rx="10" stroke="#CA0101"/>
+                            </svg>                                                                                                      
+                        </button>
+                    </div>
+                    
+                    <div class="photo_form">
+                        <button class="photo_btn">
+                            <svg width="97" height="92" viewBox="0 0 97 92" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M90 82.7778V18.2222C90 13.15 85.5 9 80 9H10C4.5 9 0 13.15 0 18.2222V82.7778C0 87.85 4.5 92 10 92H80C85.5 92 90 87.85 90 82.7778ZM27.5 57.4167L40 71.2961L57.5 50.5L80 78.1667H10L27.5 57.4167Z" fill="#D9D9D9"/>
+                                <g clip-path="url(#clip0_0_1)">
+                                <path d="M76.9765 5.29549C72.9974 9.45068 73.1402 16.0444 77.2954 20.0234C81.4506 24.0025 88.0443 23.8597 92.0233 19.7045C96.0024 15.5493 95.8596 8.95561 91.7044 4.97656C87.5492 0.997515 80.9555 1.1403 76.9765 5.29549ZM88.8545 9.45873L85.9727 12.4681L88.9821 15.3499L87.5412 16.8546L84.5318 13.9728L81.65 16.9822L80.1453 15.5413L83.0271 12.5319L80.0177 9.65009L81.4586 8.1454L84.468 11.0272L87.3498 8.01783L88.8545 9.45873Z" fill="#8A8A8A"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_0_1">
+                                <rect width="25" height="25" fill="white" transform="translate(72)"/>
+                                </clipPath>
+                                </defs>
+                            </svg>                                                                                                    
+                        </button>
+                        <button class="photo_btn">
+                            <svg width="97" height="92" viewBox="0 0 97 92" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M90 82.7778V18.2222C90 13.15 85.5 9 80 9H10C4.5 9 0 13.15 0 18.2222V82.7778C0 87.85 4.5 92 10 92H80C85.5 92 90 87.85 90 82.7778ZM27.5 57.4167L40 71.2961L57.5 50.5L80 78.1667H10L27.5 57.4167Z" fill="#D9D9D9"/>
+                                <g clip-path="url(#clip0_0_1)">
+                                <path d="M76.9765 5.29549C72.9974 9.45068 73.1402 16.0444 77.2954 20.0234C81.4506 24.0025 88.0443 23.8597 92.0233 19.7045C96.0024 15.5493 95.8596 8.95561 91.7044 4.97656C87.5492 0.997515 80.9555 1.1403 76.9765 5.29549ZM88.8545 9.45873L85.9727 12.4681L88.9821 15.3499L87.5412 16.8546L84.5318 13.9728L81.65 16.9822L80.1453 15.5413L83.0271 12.5319L80.0177 9.65009L81.4586 8.1454L84.468 11.0272L87.3498 8.01783L88.8545 9.45873Z" fill="#8A8A8A"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_0_1">
+                                <rect width="25" height="25" fill="white" transform="translate(72)"/>
+                                </clipPath>
+                                </defs>
+                            </svg>                                                                                                 
+                        </button>
+                        <button class="photo_btn">
+                            <svg width="78" height="88" viewBox="0 0 78 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M59.9765 3.29549C55.9974 7.45068 56.1402 14.0444 60.2954 18.0234C64.4506 22.0025 71.0443 21.8597 75.0233 17.7045C79.0024 13.5493 78.8596 6.95561 74.7044 2.97656C70.5492 -1.00248 63.9555 -0.8597 59.9765 3.29549ZM71.8545 7.45873L68.9727 10.4681L71.9821 13.3499L70.5412 14.8546L67.5318 11.9728L64.65 14.9822L63.1453 13.5413L66.0271 10.5319L63.0177 7.65009L64.4586 6.1454L67.468 9.0272L70.3498 6.01783L71.8545 7.45873Z" fill="#8A8A8A"/>
+                                <path d="M45.625 5H9.125C4.10625 5 0.045626 8.735 0.045626 13.3L0 79.7C0 84.265 4.06062 88 9.07937 88H63.875C68.8938 88 73 84.265 73 79.7V29.9L45.625 5ZM9.125 79.7V13.3H41.0625V34.05H63.875V79.7H9.125Z" fill="#D9D9D9"/>
+                            </svg>                                                                                                   
+                        </button>                    
+                    </div>
+                </div>
+            </div>
+            <div class="horizontal-line-lite"></div>
+            <div class="cansel-save d-flex justify-content-end">
+                <button class="cansel">
+                    Сохранить                                                                                               
+                </button>
+                <button class="save">
+                    Отмена                                                                                      
+                </button>
+            </div>
+            <div class="horizontal-line-lite"></div>
+            <div class="container-clients">
+                <p style="font-size: 23px; margin-top: 80px; margin-bottom: 40px; font-size: 26px; font-weight: 400">История изменений</p>
+                <div class="columns d-flex justify-content-between text-center">
+                    <div class="first_col">
+                        <p class="cname" style="font-weight: 500">Имя</p>
+                        <p class="cname">Петр Петров</p>
+                        <p class="cname">Петр Петров</p>
+                        <p class="cname">Ольга Иванова</p>
+                        <p class="cname">Ольга Иванова</p>
+                    </div>
+                    <div class="second_col">
+                        <p class="cdate" style="font-weight: 500">Дата</p>
+                        <p class="cdate">13 May 2023, 10:02</p>
+                        <p class="cdate">13 May 2023, 10:43</p>
+                        <p class="cdate">01 May 2023, 09:02</p>
+                        <p class="cdate">28 Apr 2023, 08:02</p>
+                    </div>
+                    <div class="third_col">
+                        <p class="cchapter" style="font-weight: 500">Раздел</p>
+                        <p class="cchapter">Вакансии</p>
+                        <p class="cchapter">Карьера</p>
+                        <p class="cchapter">Новости</p>
+                        <p class="cchapter">Новости</p>
+                    </div>
+                    <div class="fourth_col">
+                        <p class="cmore" style="color: #FAFAFA; user-select: none;">.</p>
+                        <p class="cmore">Подробнее</p>
+                        <p class="cmore">Подробнее</p>
+                        <p class="cmore">Подробнее</p>
+                        <p class="cmore">Подробнее</p>
+                    </div>
+                </div>
+                <div class="horizontal-line-table" style="margin-top: -265px"></div>
+                <div class="horizontal-line-table" style="margin-top: 67px"></div>
+                <div class="horizontal-line-table" style="margin-top: 67px"></div>
+                <div class="horizontal-line-table" style="margin-top: 67px"></div>
+                <div class="pagination d-flex justify-content-center" style="margin-top: 100px; margin-bottom: 10px;">
+                    <button class="pagination_btn">1</button>
+                    <button class="pagination_btn" style="color: #FFFFFF; background-color: var(--color-font)">2</button>
+                    <button class="pagination_btn">3</button>
+                    <button class="pagination_btn">4</button>
+                    <button class="pagination_btn">5</button>
+                    <button class="pagination_btn">...</button>
+                    <button class="pagination_btn">20</button>
+                </div>
+            </div>
+        </div>
+    </mainContent>
+    <footer class="text-end" style="padding: 10px 0; padding-right: 20px; ">
+        <p class="text-nowrap">Техническая служба: qwerty@protonpm.ru</p>
+        <p class="text-nowrap">258 - 00 - 00</p>
+    </footer>
+    <script>
+        function goToTerminal() {
+          window.location.href = "{% url 'terminal' %}";
+        }
+        function goToLoad_Photo() {
+            window.location.href = "{% url 'load_photo' %}";
+        }
+        function goToHome() {
+            window.location.href = "{% url 'home' %}";
+        }
+        function goToProfile() {
+            window.location.href = "{% url 'profile' %}";
+        }  
+    </script>
+    <script src="{% static 'scripts.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

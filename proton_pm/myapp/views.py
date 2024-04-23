@@ -14,3 +14,15 @@ def load_photo(request):
 
 def profile(request):
     return render(request, 'profile.html')
+
+def authorization(request):
+    return render(request, 'authorization.html')
+
+def terminal_hello(request):
+    return render(request, 'terminal_hello.html')
+
+def terminal_menu(request):
+    return render(request, 'terminal_menu.html')
+
+def terminal_career(request):
+    return render(request, 'terminal_career.html')

@@ -676,3 +676,28 @@ footer {
 .pagination_btn:hover {
     background-color: var(--color-line);
 }
+
+.form-control-auth {
+    padding: 15px 10px;
+    background-color: var(--color-main);
+    border-radius: 10px;
+    border: 1px solid #373636;
+    color: var(--color-font);
+    font-size: 24px;
+}
+
+.form-group > label {
+    font-size: 26px;
+    color: var(--color-font);
+    margin-top: 20px;
+}
+
+.btn-submit-auth {
+    height: 68px;
+    background-color: #04306D;
+    border: 1px solid #CCCCCC;
+    border-radius: 10px;
+    margin-top: 50px;
+    font-size: 28px;
+    color: #fff;
+}

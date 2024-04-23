@@ -1,0 +1,226 @@
+:root {
+    --color-side: #EFEFEF;
+    --color-main: #FAFAFA;
+    --color-icon: #545454;
+    --color-line: #cccccc;
+    --color-font: #333333cc;
+
+}
+
+.container {
+    position: relative;
+    padding: 0 20px; /* adjust this value for the space from the sides */
+}
+.logo {
+    position: absolute;
+    left: -180px;
+    top: 0;
+}
+.roscosmos {
+    position: absolute;
+    right: -180px;
+    top: 40px;
+    height: 50px;
+}
+.content {
+    padding-top: 50px; /* adjust this value to provide space for the images */
+}
+.button-container {
+    position: absolute;
+    left: 100px;
+    top: 55%;
+    transform: translateY(-60%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 730px; /* Adjusted width */
+    gap: 30px; /* Adjust the distance between buttons */
+}
+
+.button {
+    position: relative;
+    width: 350px; /* Adjusted width */
+    height: 170px;
+    background-size: cover;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background-color: #D8D9DC;
+    border-radius: 10px;
+    flex-direction: row; /* Change flex direction to row */
+    box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.button .left-image,
+.button .right-image {
+    width: 33.33%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.button .right-image {
+    width: 66.66%; 
+}
+
+.button .button-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 5px;
+    text-align: left;
+    z-index: 2;
+}
+
+.button-text {
+    color: var(--color-font);
+    font-size: 30px;
+    font-weight: 600;
+    margin-left: 20px;
+}
+
+.button:hover {
+    transform: scale(1.05); 
+}
+
+.carousel-container {
+    position: absolute;
+    right: 100px;
+    top: 32%;
+    transform: translateY(-50%);
+    width: 730px;
+    height: 170px;
+}
+
+.carousel-item.active {
+    opacity: 1;
+}
+
+.carousel-inner {
+    width: 100%;
+    height: 490px;
+}
+
+.carousel-inner img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.auth {
+    position: absolute;
+    left: 20px;
+    top: 89%;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth-text {
+    font-size: 22px;
+    color: var(--color-font);
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+.auth svg {
+    height: 60px;
+    width: 60px;
+
+}
+
+.back-to-home {
+    position: absolute;
+    right: 20px;
+    top: 89%;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.back-to-home-text {
+    font-size: 22px;
+    color: var(--color-font);
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+.back-to-home svg {
+    height: 60px;
+    width: 60px;
+
+}
+
+.career_btnn, .career_btn {
+    margin-top: 70px;
+    background: linear-gradient(90deg, rgba(217,217,217,1) 0%, rgba(217,217,217,0) 100%) !important;
+    border: none;
+    border-radius: 10px;
+    height: 60px;
+    width: 500px;
+    box-shadow: -4px 4px 0px rgba(0, 0, 0, 0.1);
+    margin-left: 50px;
+    transition: transform 0.3s ease;
+}
+
+.career_btn{
+    height: 70px;
+}
+
+.career_btn_text, .career_btnn_text {
+    text-align: left !important;
+    margin: auto 0;
+    margin-left: 20px;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--color-font);
+    text-shadow: 2px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.career_btnn_text {
+    margin-left: 10px;
+}
+
+.career-container {
+    margin-left: 100px;
+    top: 89%;
+    height: 500px;
+
+}
+
+.career_btnn:hover, .career_btn:hover {
+    transform: scale(1.05); 
+}
+
+.text-career {
+    max-width: 780px;
+    margin-top: 200px;
+    margin-left: 200px;
+    color: #545454;
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.career-img {
+    margin-top: -280px;
+    height: auto;
+    width: 800px;
+    margin-left: 800px;
+}

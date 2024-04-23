@@ -1,0 +1,132 @@
+{% load static %}
+
+<html>
+<head>
+    <title>Моя страница</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: url({% static 'img/bg_terminal2.png' %}) no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            cursor: pointer; /* add cursor style */
+        }
+        
+
+    </style>
+    <link rel="stylesheet" href="{% static 'style-terminal.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container d-flex">
+        <img src="{% static 'img/logo2.png' %}" alt="Логотип" class="logo">
+        <img src="{% static 'img/roscosmos.png' %}" alt="Роскосмос" class="roscosmos">
+    </div>
+    <div class="button-container">
+        <button class="button">
+            <div class="left-image" style="background-image: url({% static 'img/predpriyatie.svg' %});"></div>
+            <div class="right-image" style="background-image: url({% static 'img/stripes.svg' %});"></div>
+            <div class="button-text">О ПРЕДПРИЯТИИ</div>
+        </button>
+    
+        <button class="button">
+            <div class="left-image" style="background-image: url({% static 'img/news.svg' %});"></div>
+            <div class="right-image" style="background-image: url({% static 'img/stripes.svg' %});"></div>
+            <div class="button-text">НОВОСТИ</div>
+        </button>
+        
+        <button class="button" onclick="redirectToCareer()">
+            <div class="left-image" style="background-image: url({% static 'img/award.svg' %});"></div>
+            <div class="right-image" style="background-image: url({% static 'img/stripes.svg' %});"></div>
+            <div class="button-text">КАРЬЕРА</div>
+        </button>
+    
+        <button class="button">
+            <div class="left-image" style="background-image: url({% static 'img/bussines.svg' %});"></div>
+            <div class="right-image" style="background-image: url({% static 'img/stripes.svg' %});"></div>
+            <div class="button-text">РУКОВОДСТВО</div>
+        </button>
+        
+        <button class="button">
+            <div class="left-image" style="background-image: url({% static 'img/curriculum.svg' %});"></div>
+            <div class="right-image" style="background-image: url({% static 'img/stripes.svg' %});"></div>
+            <div class="button-text">ВАКАНСИИ</div>
+        </button>
+    
+        <button class="button">
+            <div class="left-image" style="background-image: url({% static 'img/custom.svg' %});"></div>
+            <div class="right-image" style="background-image: url({% static 'img/stripes.svg' %});"></div>
+            <div class="button-text">ОБРАТНАЯ СВЯЗЬ</div>
+        </button>
+    </div>
+    <div class="carousel-container">
+        <p style="font-size: 32px; z-index: 100; color: var(--color-font); font-weight: 700; text-align: center;">ФОТОГАЛЕРЕЯ</p>
+        <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="{% static "img/carusel_1.jpg" %}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="{% static "img/carusel_2.jpeg" %}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="{% static "img/carusel_3.jpg" %}" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Предыдущий</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Следующий</span>
+            </button>
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+        </div>
+    </div>
+    <div class="auth" onclick="redirectToAuthorization()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#616262" class="bi bi-person-bounding-box" viewBox="0 0 16 16">
+            <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5"/>
+            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+            <p class="back-to-home-text">Войти</p>
+        </svg>            
+    </div>
+    <div class="back-to-home" onclick="redirectToHomeT()">
+        <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <rect width="41" height="41" fill="url(#pattern0_1_668)" fill-opacity="0.55"/>
+            <defs>
+            <pattern id="pattern0_1_668" patternContentUnits="objectBoundingBox" width="1" height="1">
+            <use xlink:href="#image0_1_668" transform="scale(0.00195312)"/>
+            </pattern>
+            <image id="image0_1_668" width="512" height="512" xlink:href="data:image/png;base64,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"/>
+            </defs>
+            <p class="back-to-home-text">Домой</p>
+        </svg>            
+    </div>
+    
+    <script>
+        function redirectToAuthorization() {
+            window.location.href = "{% url 'authorization' %}";
+        }
+        function redirectToHomeT() {
+            window.location.href = "{% url 'terminal_hello' %}";
+        }
+        function redirectToCareer() {
+            window.location.href = "{% url 'terminal_career' %}";
+        }
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
+    
+</body>
+</html>

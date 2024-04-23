@@ -1,10 +1,7 @@
 from django.shortcuts import render
 
-def main(request):
-    return render(request, 'main.html')
-
 def home(request):
-    return render(request, 'main.html')
+    return render(request, 'terminal_hello.html')
 
 def terminal(request):
     return render(request, 'terminal.html')
@@ -18,8 +15,8 @@ def profile(request):
 def authorization(request):
     return render(request, 'authorization.html')
 
-def terminal_hello(request):
-    return render(request, 'terminal_hello.html')
+def pages(request):
+    return render(request, 'pages.html')
 
 def terminal_menu(request):
     return render(request, 'terminal_menu.html')

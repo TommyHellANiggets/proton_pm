@@ -1,0 +1,13 @@
+<div class="content-item">
+    <h3>{{ content.title }}</h3>
+    <p>{{ content.body }}</p>
+    <!-- Кнопка для добавления подраздела -->
+    <button onclick="addSubsection({{ content.id }})">Добавить подраздел</button>
+
+    <!-- Отображение дочерних записей -->
+    <div class="subsections">
+        {% for child in content.children.all %}
+            {% include 'content_item.html' with content=child %}
+        {% endfor %}
+    </div>
+</div>

@@ -11,7 +11,7 @@
 </head>
 <body>
     <sidebar>
-        <div class="sidebar expanded" style="height: 1800px;">
+        <div class="sidebar expanded" style="height: 160%;">
             <div class="toggle-btn" onclick="toggleSidebar()" style="margin-top: -5px;">
                 <i class="bi bi-x"></i>
             </div>
@@ -83,44 +83,105 @@
                             <circle cx="6" cy="6" r="6" fill="#0DA600"/>
                         </svg>                            
                     </button>
-                    <button class="btn btn-block" style="background-color: #FAFAFA; border: 1px solid #CCCCCC">
+                    <button class="btn add-title" id="addSectionBtn">
                         <svg style="margin-left: -50px;" width="19" height="13" viewBox="0 0 19 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11.4 3.71429H0V5.57143H11.4V3.71429ZM11.4 0H0V1.85714H11.4V0ZM15.2 7.42857V3.71429H13.3V7.42857H9.5V9.28571H13.3V13H15.2V9.28571H19V7.42857H15.2ZM0 9.28571H7.6V7.42857H0V9.28571Z" fill="#002D67"/>
-                        </svg>                            
+                            <path d="M11.4 3.71429H0V5.57143H11.4V3.71429ZM11.4 0H0V1.85714H11.4V0ZM15.2 7.42857V3.71429H13.3V7.42857H9.5V9.28571H13.3V13H15.2V9.28571H19V7.42857H15.2ZM0 9.28571H7.6V7.42857H0V9.28571Z" fill="#002D67" />
+                        </svg>
                         <span style="margin-left: 20px; font-size: 21px;">Добавить раздел</span>
                     </button>
+                    <form method="POST" action="/pages">
+                        {% csrf_token %}
+                        <div class="expandable-content" id="expandableContent">
+                            <input type="text" class="input-section" name="title" placeholder="Введите название раздела...">
+                            <!-- Выпадающее меню для выбора родительского раздела -->
+                            <select name="parent">
+                                <option value="" selected>Родительский раздел</option>
+                                {% for content in valid_parents %}
+                                    <option value="{{ content.id }}">{{ content.title }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn add-section">Добавить</button>
+                        </div>
+                    </form>
+                    <!-- Блок about с иконками -->
                     <div class="about">
-                        <p class="p_hight">О предприятии <img src="{% static "img/pen.svg" %}"></p>
-                        <p class="p_low">Лицензии и сертификаты <img src="{% static "img/pen.svg" %}"></p>
-                        <p class="p_low">История <img src="{% static "img/pen.svg" %}"></p>
-                        <p class="p_low">Промышленный туризм <img src="{% static "img/pen.svg" %}"></p>
-                        <p class="p_hight">Руководство <img src="{% static "img/pen.svg" %}"></p>
-                        <p class="p_hight">Новости <img src="{% static "img/pen.svg" %}"></p>
-                        <p class="p_hight">Карьера <img src="{% static "img/pen.svg" %}"></p>
-                        <p class="p_low">Молодым специалистам <img src="{% static "img/pen.svg" %}"></p>
-                        <p class="p_low">Подготовка кадров <img src="{% static "img/pen.svg" %}"></p>
-                        <p class="p_low">Студентам и школьникам <img src="{% static "img/pen.svg" %}"></p>
-                        <p class="p_hight">Вакансии <img src="{% static "img/pen.svg" %}"></p>
-                        <p class="p_low">Рабочие <img src="{% static "img/pen.svg" %}"></p>
-                        <p class="p_low">Специалисты <img src="{% static "img/pen.svg" %}"></p>
-                        <p class="p_low">Руководители <img src="{% static "img/pen.svg" %}"></p>
-                        <p class="p_hight">Обратная связь <img src="{% static "img/pen.svg" %}"></p>   
+                        {% for content in valid_parents %}
+                            <p class="p_hight">
+                                <!-- Заголовок из столбца title с применением фильтра truncatechars -->
+                                {{ content.title|truncatechars:16 }}
+
+                                <!-- Кнопки рядом с заголовком -->
+                                <a href="#" class="edit-parent" data-id="{{ content.id }}">
+                                    <img src="{% static 'img/pen.svg' %}" alt="Pen icon">
+                                </a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                    <img src="{% static 'img/krest.svg' %}" alt="Krest icon">
+                                </a>
+
+                                <!-- Дочерние элементы -->
+                                <ul>
+                                    {% for child in content.childrens.all %}
+                                        <!-- Проверяем, является ли текущий элемент дочерним для другого объекта -->
+                                        {% if child.parent_id %}
+                                            <li>
+                                                <a style="color: #333333cc;" href="{% url 'content_detail' content_id=child.id %}">{{ child.title }}</a>
+                                                <a href="#" class="edit-child" data-id="{{ child.id }}">
+                                                    <img src="{% static 'img/pen.svg' %}" alt="Pen icon">
+                                                </a>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                                    <img src="{% static 'img/krest.svg' %}" alt="Krest icon">
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </p>
+                        {% endfor %}
                     </div>
-                    <button class="btn btn-block" style="background-color: #FAFAFA; border: 1px solid #CCCCCC">
-                        <svg style="margin-left: -50px" width="8" height="16" viewBox="0 0 8 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6.90909 3.63636V12C6.90909 13.6073 5.60727 14.9091 4 14.9091C2.39273 14.9091 1.09091 13.6073 1.09091 12V2.90909C1.09091 1.90545 1.90545 1.09091 2.90909 1.09091C3.91273 1.09091 4.72727 1.90545 4.72727 2.90909V10.5455C4.72727 10.9455 4.4 11.2727 4 11.2727C3.6 11.2727 3.27273 10.9455 3.27273 10.5455V3.63636H2.18182V10.5455C2.18182 11.5491 2.99636 12.3636 4 12.3636C5.00364 12.3636 5.81818 11.5491 5.81818 10.5455V2.90909C5.81818 1.30182 4.51636 0 2.90909 0C1.30182 0 0 1.30182 0 2.90909V12C0 14.2109 1.78909 16 4 16C6.21091 16 8 14.2109 8 12V3.63636H6.90909Z" fill="#002D67"/>
-                        </svg>                                                                               
-                        <span style="margin-left: 20px; font-size: 21px;">Добавить файл</span>
-                    </button>
+
+                    <!-- Модальное окно для подтверждения удаления -->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel">Подтверждение удаления</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Вы уверены, что хотите удалить?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
+                                    <button type="button" class="btn btn-danger" id="confirmDelete">Удалить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="main-content">
+                        <form id="uploadForm" method="POST" action="/pages" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <label for="formFileMultiple" class="custom-file-upload">
+                                <svg style="margin-top: 15px; margin-left: 10px; width: 40px; height: 40px;" width="8" height="16" viewBox="0 0 8 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6.90909 3.63636V12C6.90909 13.6073 5.60727 14.9091 4 14.9091C2.39273 14.9091 1.09091 13.6073 1.09091 12V2.90909C1.09091 1.90545 1.90545 1.09091 2.90909 1.09091C3.91273 1.09091 4.72727 1.90545 4.72727 2.90909V10.5455C4.72727 10.9455 4.4 11.2727 4 11.2727C3.6 11.2727 3.27273 10.9455 3.27273 10.5455V3.63636H2.18182V10.5455C2.18182 11.5491 2.99636 12.3636 4 12.3636C5.00364 12.3636 5.81818 11.5491 5.81818 10.5455V2.90909C5.81818 1.30182 4.51636 0 2.90909 0C1.30182 0 0 1.30182 0 2.90909V12C0 14.2109 1.78909 16 4 16C6.21091 16 8 14.2109 8 12V3.63636H6.90909Z" fill="#002D67"/>
+                                </svg>
+                                <span style="margin-left: 10px; font-size: 21px; top: 10px; position: relative;">Добавить файл</span>
+                            </label>
+                            <input type="file" id="formFileMultiple" name="file" multiple onchange="previewFiles()">
+                            <!-- Этот скрытый инпут нужен для того, чтобы сработал submit формы -->
+                            <button type="submit" id="submitBtn" style="display: none;"></button>
+                            <button type="reset" id="resetBtn" style="display: none;"></button>
+                        </form>
+                    </div>
                 </div>
                 <div class="editor-container">
+                    <form method="post" action="">
                     <!-- Добавьте иконки сюда -->
                     <div class="icon-container d-flex justify-content-between">
                         <div class="group1">
                             <button class="form_btn" style="margin-left: 20px">
                                 <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8 5.82C8.90233 5.24571 9.53488 4.30286 9.53488 3.42857C9.53488 1.49143 7.90698 0 5.81395 0H0V12H6.54884C8.49302 12 10 10.5429 10 8.75143C10 7.44857 9.2 6.33429 8 5.82ZM2.7907 2.14286H5.5814C6.35349 2.14286 6.97674 2.71714 6.97674 3.42857C6.97674 4.14 6.35349 4.71429 5.5814 4.71429H2.7907V2.14286ZM6.04651 9.85714H2.7907V7.28571H6.04651C6.8186 7.28571 7.44186 7.86 7.44186 8.57143C7.44186 9.28286 6.8186 9.85714 6.04651 9.85714Z" fill="#8A8A8A"/>
-                                </svg>                                                        
+                                </svg>
                             </button>
                             <button class="form_btn">
                                 <svg width="9" height="12" viewBox="0 0 9 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -209,67 +270,42 @@
                             </button>
                         </div>    
                     </div>
-                    <textarea class="form-control" rows="10" placeholder=""></textarea>
-                    <div class="confirm-delete d-flex justify-content-end">
-                        <button class="confirm">
-                            <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8.44912 14.6786L5.13019 11.258L4 12.4146L8.44912 17L18 7.1566L16.8778 6L8.44912 14.6786Z" fill="#0DA600"/>
-                                <rect x="0.5" y="0.5" width="20" height="20" rx="10" stroke="#0DA600"/>
-                            </svg>                                                                                                    
-                        </button>
-                        <button class="delete">
-                            <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M16 7.00714L14.9929 6L11 9.99286L7.00714 6L6 7.00714L9.99286 11L6 14.9929L7.00714 16L11 12.0071L14.9929 16L16 14.9929L12.0071 11L16 7.00714Z" fill="#CA0101"/>
-                                <rect x="0.5" y="0.5" width="20" height="20" rx="10" stroke="#CA0101"/>
-                            </svg>                                                                                                      
-                        </button>
+                        {% csrf_token %}
+                    <div class="title_name" id="selected-child">
+                        <textarea class="form-control body-textarea" rows="10" placeholder="Body"></textarea>
+                        <div class="confirm-delete d-flex justify-content-end">
+                            <button class="confirm" id="submit-edit">
+                                <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.44912 14.6786L5.13019 11.258L4 12.4146L8.44912 17L18 7.1566L16.8778 6L8.44912 14.6786Z" fill="#0DA600"/>
+                                    <rect x="0.5" y="0.5" width="20" height="20" rx="10" stroke="#0DA600"/>
+                                </svg>
+                            </button>
+                            <button class="delete">
+                                <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 7.00714L14.9929 6L11 9.99286L7.00714 6L6 7.00714L9.99286 11L6 14.9929L7.00714 16L11 12.0071L14.9929 16L16 14.9929L12.0071 11L16 7.00714Z" fill="#CA0101"/>
+                                    <rect x="0.5" y="0.5" width="20" height="20" rx="10" stroke="#CA0101"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                    
-                    <div class="photo_form">
-                        <button class="photo_btn">
-                            <svg width="97" height="92" viewBox="0 0 97 92" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M90 82.7778V18.2222C90 13.15 85.5 9 80 9H10C4.5 9 0 13.15 0 18.2222V82.7778C0 87.85 4.5 92 10 92H80C85.5 92 90 87.85 90 82.7778ZM27.5 57.4167L40 71.2961L57.5 50.5L80 78.1667H10L27.5 57.4167Z" fill="#D9D9D9"/>
-                                <g clip-path="url(#clip0_0_1)">
-                                <path d="M76.9765 5.29549C72.9974 9.45068 73.1402 16.0444 77.2954 20.0234C81.4506 24.0025 88.0443 23.8597 92.0233 19.7045C96.0024 15.5493 95.8596 8.95561 91.7044 4.97656C87.5492 0.997515 80.9555 1.1403 76.9765 5.29549ZM88.8545 9.45873L85.9727 12.4681L88.9821 15.3499L87.5412 16.8546L84.5318 13.9728L81.65 16.9822L80.1453 15.5413L83.0271 12.5319L80.0177 9.65009L81.4586 8.1454L84.468 11.0272L87.3498 8.01783L88.8545 9.45873Z" fill="#8A8A8A"/>
-                                </g>
-                                <defs>
-                                <clipPath id="clip0_0_1">
-                                <rect width="25" height="25" fill="white" transform="translate(72)"/>
-                                </clipPath>
-                                </defs>
-                            </svg>                                                                                                    
-                        </button>
-                        <button class="photo_btn">
-                            <svg width="97" height="92" viewBox="0 0 97 92" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M90 82.7778V18.2222C90 13.15 85.5 9 80 9H10C4.5 9 0 13.15 0 18.2222V82.7778C0 87.85 4.5 92 10 92H80C85.5 92 90 87.85 90 82.7778ZM27.5 57.4167L40 71.2961L57.5 50.5L80 78.1667H10L27.5 57.4167Z" fill="#D9D9D9"/>
-                                <g clip-path="url(#clip0_0_1)">
-                                <path d="M76.9765 5.29549C72.9974 9.45068 73.1402 16.0444 77.2954 20.0234C81.4506 24.0025 88.0443 23.8597 92.0233 19.7045C96.0024 15.5493 95.8596 8.95561 91.7044 4.97656C87.5492 0.997515 80.9555 1.1403 76.9765 5.29549ZM88.8545 9.45873L85.9727 12.4681L88.9821 15.3499L87.5412 16.8546L84.5318 13.9728L81.65 16.9822L80.1453 15.5413L83.0271 12.5319L80.0177 9.65009L81.4586 8.1454L84.468 11.0272L87.3498 8.01783L88.8545 9.45873Z" fill="#8A8A8A"/>
-                                </g>
-                                <defs>
-                                <clipPath id="clip0_0_1">
-                                <rect width="25" height="25" fill="white" transform="translate(72)"/>
-                                </clipPath>
-                                </defs>
-                            </svg>                                                                                                 
-                        </button>
-                        <button class="photo_btn">
-                            <svg width="78" height="88" viewBox="0 0 78 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M59.9765 3.29549C55.9974 7.45068 56.1402 14.0444 60.2954 18.0234C64.4506 22.0025 71.0443 21.8597 75.0233 17.7045C79.0024 13.5493 78.8596 6.95561 74.7044 2.97656C70.5492 -1.00248 63.9555 -0.8597 59.9765 3.29549ZM71.8545 7.45873L68.9727 10.4681L71.9821 13.3499L70.5412 14.8546L67.5318 11.9728L64.65 14.9822L63.1453 13.5413L66.0271 10.5319L63.0177 7.65009L64.4586 6.1454L67.468 9.0272L70.3498 6.01783L71.8545 7.45873Z" fill="#8A8A8A"/>
-                                <path d="M45.625 5H9.125C4.10625 5 0.045626 8.735 0.045626 13.3L0 79.7C0 84.265 4.06062 88 9.07937 88H63.875C68.8938 88 73 84.265 73 79.7V29.9L45.625 5ZM9.125 79.7V13.3H41.0625V34.05H63.875V79.7H9.125Z" fill="#D9D9D9"/>
-                            </svg>                                                                                                   
-                        </button>                    
-                    </div>
+
+<!--                    {% for file in all_files %}-->
+<!--                        {% if file.file %}-->
+<!--                            <div class="photo_btn">-->
+<!--                                <img src="{{ file.file.url }}" alt="Image" width="97" height="92" />-->
+<!--                            </div>-->
+<!--                        {% endif %}-->
+<!--                    {% endfor %}-->
+                    <div id="filePreview" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 80px;"></div>
                 </div>
             </div>
-            <div class="horizontal-line-lite"></div>
-            <div class="cansel-save d-flex justify-content-end">
-                <button class="cansel">
-                    Сохранить                                                                                               
-                </button>
-                <button class="save">
-                    Отмена                                                                                      
-                </button>
             </div>
+            <div class="horizontal-line-lite"></div>
+            <div class="cansel-save d-flex justify-content-end" style="">
+                <button type="button" class="cansel">Сохранить</button>
+                <button type="reset" id="formResetBtn" class="save">Отмена</button>
+            </div>
+
             <div class="horizontal-line-lite"></div>
             <div class="container-clients">
                 <p style="font-size: 23px; margin-top: 80px; margin-bottom: 40px; font-size: 26px; font-weight: 400">История изменений</p>
@@ -335,7 +371,31 @@
         }
         function goToProfile() {
             window.location.href = "{% url 'profile' %}";
-        }  
+        }
+    </script>
+    <script>
+
+        $('#submit-edit').click(function() {
+            var childId = $(this).data('id'); // Получаем идентификатор дочернего элемента
+            var title = $('#selected-child .title-input').val(); // Получаем новое значение заголовка
+            var body = $('#selected-child .body-textarea').val(); // Получаем новое значение содержимого
+            var csrfToken = $('input[name="csrfmiddlewaretoken"]').val(); // Получаем CSRF токен
+            $.ajax({
+                url: '{% url "pages" %}',
+                type: 'POST',
+                data: {
+                    'child_id': childId,
+                    'title': title,
+                    'body': body,
+                    'csrfmiddlewaretoken': csrfToken // Включаем CSRF токен в данные запроса
+                },
+                success: function(data) {
+                    // Обработка успешного обновления
+                    console.log('Child updated successfully!');
+                }
+            });
+        });
+
     </script>
     <script src="{% static 'scripts.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

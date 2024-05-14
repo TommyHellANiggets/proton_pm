@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-$(ia9hax-v4ij%g8(h20=61&akdn-sm#g)x!qx184t6stt*i79
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '::1']
+
 
 
 # Application definition
@@ -78,9 +79,15 @@ WSGI_APPLICATION = 'proton_pm.wsgi.application'
 
 DATABASES = {
     'default': {
-
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'proton_pm',
+        'USER': 'root',
+        'PASSWORD': '12345678',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
+
 
 
 # Password validation
@@ -122,6 +129,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+
 
 
 # Default primary key field type

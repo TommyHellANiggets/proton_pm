@@ -189,6 +189,28 @@ body, html {
     width: 72%;
 }
 
+#formFileMultiple {
+    display: none;
+}
+
+.custom-file-upload {
+    width: 320px;
+    height: 70px;
+    background-color: #FAFAFA;
+    border: 1px solid #CCCCCC;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.custom-file-upload:hover {
+    background-color: #EFEFEF;
+}
+
+/* Добавьте стили для иконки (если используете) */
+.custom-file-upload svg {
+    margin-right: 10px;
+}
+
 .main-con {
     margin-top: 45px;
 }
@@ -198,6 +220,71 @@ body, html {
     margin-bottom: 15px;
     height: 70px;
     border-radius: 10px !important;
+}
+
+/* Кнопка */
+.add-title {
+    background-color: #FAFAFA;
+    border: 1px solid #CCCCCC !important;
+    width: 320px;
+    margin-bottom: 15px;
+    height: 70px;
+    border-radius: 10px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-title svg {
+    height: 40px;
+    width: 40px;
+}
+
+.add-title:hover {
+    background-color: #EFEFEF !important;
+}
+
+/* Раскрывающееся содержимое */
+.expandable-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0;
+    margin: 0;
+}
+
+.expandable-content.active {
+    max-height: 140px; /* Установите нужное значение для раскрытия содержимого */
+    padding-top: 10px;
+}
+
+/* Строка ввода */
+.input-section {
+    width: 320px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+}
+
+/* Кнопка добавить */
+.add-section {
+    background-color: #002D67 !important;
+    height: 40px;
+    width: 320px;
+    color: white !important;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 20px !important;
+}
+
+.add-section:hover {
+    background-color: #1B5A88;
 }
 
 .btn-block svg {

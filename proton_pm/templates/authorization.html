@@ -75,21 +75,25 @@
             <div class="main-con">
                 <p style="font-size: 36px; color: var(--color-font); margin-top: 10px; margin-left: 80px;">Вход в личный кабинет<p>
                 <div class="auth_container" style="width: 500px; margin: 0 auto; margin-top: 50px">
-                    <div class="form-group">
-                        <label for="login" style="width: 100%;">Логин:</label>
-                        <input type="text" id="login" class="form-control-auth" style="width: 100%; ">
-                    </div>
-                    <div class="form-group">
-                        <label for="password" style="width: 100%;">Пароль:</label>
-                        <input type="password" id="password" class="form-control-auth" style="width: 100%;">
-                    </div>
-                    <button type="submit" class="btn-submit-auth" style="width: 100%;">Вход</button>
+                    <form method="POST" action="{% url 'authorization' %}">
+                        {% csrf_token %}  <!-- Добавьте это для защиты от CSRF-атак -->
+                        <div class="form-group">
+                            <label for="login" style="width: 100%;">Логин:</label>
+                            <input type="text" id="login" name="username" class="form-control-auth" style="width: 100%;">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" style="width: 100%;">Пароль:</label>
+                            <input type="password" id="password" name="password" class="form-control-auth" style="width: 100%;">
+                        </div>
+                        <button type="submit" class="btn-submit-auth" style="width: 100%;">Вход</button>
+                    </form>
                 </div>
-                <p style="font-size: 28px; color: var(--color-font); margin-top: 250px; margin-left: 80px; max-width: 800px; line-height: 3;">Забыли пароль? Оставьте заявку на смену пароля ниже или обратитесь в техническую службу по  телефону <strong>258 - 00 - 00</strong><p>
+                <p style="font-size: 28px; color: var(--color-font); margin-top: 250px; margin-left: 80px; max-width: 800px; line-height: 3;">Забыли пароль? Оставьте заявку на смену пароля ниже или обратитесь в техническую службу по телефону <strong>258 - 00 - 00</strong><p>
                 <button class="notify" style="background-color: #f4f4f4; margin-left: 80px; width: 520px">
-                    Отправить заявку                                                                                     
+                    Отправить заявку
                 </button>
-            </div>    
+            </div>
+
         </div>
     </mainContent>
     <footer class="text-end" style="padding: 10px 0; padding-right: 20px; ">

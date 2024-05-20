@@ -21,6 +21,20 @@ function toggleSidebar() {
     }
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    // Находим кнопку "Сохранить"
+    const saveButton = document.querySelector(".save.submit");
+
+    // Находим скрытую кнопку "submitBtn"
+    const submitButton = document.getElementById("submitBtn");
+
+    // Добавляем обработчик события на кнопку "Сохранить"
+    saveButton.addEventListener("click", function() {
+        // Программно вызываем клик на скрытой кнопке
+        submitButton.click();
+    });
+});
+
 
 // Инициализация массива для хранения файлов для предварительного просмотра
 // Инициализация массива для хранения файлов для предварительного просмотра
@@ -179,5 +193,45 @@ document.addEventListener("DOMContentLoaded", function() {
     resetButton.addEventListener('click', function() {
         // Очищаем значения формы
         form.reset();
+    });
+});
+
+
+// Обработчик нажатия на карандаш рядом с заголовком раздела
+$('.edit-parent').click(function(e) {
+    e.preventDefault();
+    // Получаем значение content_id и title
+    var content_id = $(this).data('id');
+    var title = $(this).data('title');
+    // Устанавливаем значение content_id в скрытое поле
+    $('#content-id').val(content_id);
+    // Устанавливаем значение title в текстовое поле
+    $('#body').val(title);
+    // Очищаем значения путей к изображениям
+    $('input[name="image1"]').val('');
+    $('input[name="image2"]').val('');
+    $('input[name="image3"]').val('');
+});
+
+// Обработчик отправки формы редактирования контента
+$('#edit-content-form').submit(function(e) {
+    e.preventDefault();
+    // Получаем данные формы
+    var formData = new FormData(this);
+    // Отправляем POST запрос
+    $.ajax({
+        url: '/edit_content/',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            console.log(data);
+            // Здесь можно выполнить какие-то действия после успешного сохранения
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            // Здесь можно выполнить какие-то действия в случае ошибки
+        }
     });
 });

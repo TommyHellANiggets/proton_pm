@@ -65,7 +65,6 @@ class Role(models.Model):
         return f"Role: {self.display_name} (ID: {self.role_id})"
 
 
-# models.py
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -77,11 +76,21 @@ class Content(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='contents')
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='childrens')
 
+    # Добавляем поля для хранения ссылок на изображения
+    image1 = models.ImageField(upload_to='upldfile', blank=True, null=True)
+    image2 = models.ImageField(upload_to='upldfile', blank=True, null=True)
+    image3 = models.ImageField(upload_to='upldfile', blank=True, null=True)
+
+    # Уникальный URL
+
     class Meta:
         db_table = 'content'
 
     def __str__(self):
-        return f"{self.title} by {self.author}"
+        return self.title
+
+
+
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -124,3 +133,5 @@ class Publication(models.Model):
 
     def __str__(self):
         return f"Publication in terminal {self.terminal} with content {self.content} and file {self.file}"
+
+

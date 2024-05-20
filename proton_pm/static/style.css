@@ -256,8 +256,8 @@ body, html {
 }
 
 .expandable-content.active {
-    max-height: 140px; /* Установите нужное значение для раскрытия содержимого */
-    padding-top: 10px;
+    max-height: 150px; /* Установите нужное значение для раскрытия содержимого */
+    padding-top: 0px;
 }
 
 /* Строка ввода */
@@ -434,7 +434,7 @@ body, html {
 }
 
 .cansel {
-    background-color: hsla(119, 99%, 27%, 0.69);
+    background-color: hsla(0, 100%, 38%, 0.62);
     color: #FAFAFA;
     height: 60px;
     width: 150px;
@@ -447,7 +447,7 @@ body, html {
 }
 
 .save {
-    background-color: hsla(0, 100%, 38%, 0.62);
+    background-color: hsla(119, 99%, 27%, 0.69);
     color: #FAFAFA;
     height: 60px;
     width: 150px;
@@ -773,6 +773,19 @@ footer {
     font-size: 24px;
 }
 
+.form-control-reg {
+    padding: 15px 10px;
+    background-color: var(--color-main);
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    color: var(--color-font);
+    font-size: 24px;
+    height: 50px;
+    width: 300px;
+    margin-bottom: 10px;
+}
+
+
 .form-group > label {
     font-size: 26px;
     color: var(--color-font);
@@ -787,4 +800,36 @@ footer {
     margin-top: 50px;
     font-size: 28px;
     color: #fff;
+}
+
+.title-container {
+    width: 300px;
+    height: 70px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px
+}
+
+.text-edited {
+    font-size: 24px;
+    color: #333333cc;
+    margin-top: 15px;
+    margin-left: 20px;
+    display: block
+}
+
+.styled-reg-button {
+    background-color: #0051B8;
+    border-radius: 5px;
+    color: white;
+    height: 50px;
+    width: 605px;
+    border: none;
+    position: relative;
+    margin-top: 20px
+}
+
+.styled-reg-button::before {
+    color: white;
+    font-size: 16px; /* Можно изменить размер шрифта */
 }

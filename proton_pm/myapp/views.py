@@ -8,13 +8,35 @@ def home(request):
 
 
 def terminal(request):
-    return render(request, 'terminal.html')
+    # Получаем текущего пользователя
+    current_user = request.user
+
+    # Создаем контекст с данными профиля
+    context = {
+        'first_name': current_user.first_name,
+        'last_name': current_user.last_name,
+        'email': current_user.email,
+        'role': 'Администратор' if current_user.is_staff else 'Оператор',
+    }
+
+    # Отрисовываем шаблон с переданным контекстом
+    return render(request, 'terminal.html', context)
 
 
 def load_photo(request):
-    return render(request, 'load_photo.html')
+    # Получаем текущего пользователя
+    current_user = request.user
 
+    # Создаем контекст с данными профиля
+    context = {
+        'first_name': current_user.first_name,
+        'last_name': current_user.last_name,
+        'email': current_user.email,
+        'role': 'Администратор' if current_user.is_staff else 'Оператор',
+    }
 
+    # Отрисовываем шаблон с переданным контекстом
+    return render(request, 'load_photo.html', context)
 
 
 def profile(request):
@@ -27,7 +49,6 @@ def profile(request):
         'last_name': current_user.last_name,
         'email': current_user.email,
         'role': 'Администратор' if current_user.is_staff else 'Оператор',
-
     }
 
     # Отрисовываем шаблон с переданным контекстом
@@ -76,14 +97,13 @@ import string
 import os
 
 # Функция для генерации уникального URL
-def generate_unique_url():
-    characters = string.ascii_letters + string.digits
-    return ''.join(random.choices(characters, k=6))
 
 # Представление для обработки запросов и отображения файлов
 @login_required
 def pages(request):
+    # Отрисовываем шаблон с переданным контекстом
     if request.method == 'POST':
+
         # Обработка формы ContentForm
         form = ContentForm(request.POST)
         if form.is_valid():
@@ -144,7 +164,14 @@ def pages(request):
     # Формируем список допустимых родительских записей для выпадающего списка
     valid_parents = [content for content in all_content if not content.parent_id]
 
+    current_user = request.user
+
+    # Создаем контекст с данными профиля
     context = {
+        'first_name': current_user.first_name,
+        'last_name': current_user.last_name,
+        'email': current_user.email,
+        'role': 'Администратор' if current_user.is_staff else 'Оператор',
         'form': form,
         'valid_parents': valid_parents,
         'all_content': all_content,
@@ -154,27 +181,244 @@ def pages(request):
     # Отображаем страницу с текущими записями контента и загруженными файлами
     return render(request, 'pages.html', context)
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.models import User
+from .forms import RegistrationForm
 
-from django.shortcuts import render, get_object_or_404
-from .models import Content
+def is_superuser(user):
+    return user.is_superuser
+
+@login_required
+@user_passes_test(is_superuser)
+def settings(request):
+    if request.method == 'POST':
+        registration_form = RegistrationForm(request.POST)
+        if registration_form.is_valid():
+            username = registration_form.cleaned_data['username']
+            first_name = registration_form.cleaned_data['first_name']
+            last_name = registration_form.cleaned_data['last_name']
+            email = registration_form.cleaned_data['email']
+            password = registration_form.cleaned_data['password1']
+            is_superuser = registration_form.cleaned_data['is_superuser']
+
+            # Создаем нового пользователя
+            new_user = User.objects.create_user(username=username,
+                                                first_name=first_name,
+                                                last_name=last_name,
+                                                email=email,
+                                                password=password)
+            # Устанавливаем статус суперпользователя
+            if is_superuser:
+                new_user.is_superuser = True
+                new_user.save()
+
+            return redirect('settings')  # Перенаправляем обратно на страницу настроек
+
+    else:
+        registration_form = RegistrationForm()
+
+    users = User.objects.all()
+    return render(request, 'settings.html', {'registration_form': registration_form, 'users': users})
+
+@login_required
+def delete_user(request, user_id):
+    if request.method == 'POST':
+        user = User.objects.get(pk=user_id)
+        user.delete()
+        return redirect('settings')  # Перенаправляем обратно на страницу настроек
+    else:
+        return redirect('home')  # Возвращаемся на главную, если запрос не POST
+
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Content, File
+
+@login_required
+def save_file(request):
+    if request.method == 'POST':
+        files = request.FILES.getlist('file')
+        for file in files:
+            unique_url = generate_unique_url()
+            while File.objects.filter(unique_url=unique_url).exists():
+                unique_url = generate_unique_url()
+            file_extension = file.name.split('.')[-1]
+            new_file_name = unique_url + '.' + file_extension
+            file.name = new_file_name
+            file_obj = File.objects.create(file=file, unique_url=unique_url, file_extension=file_extension)
+            file_obj.save()
+
+            # Обновление изображений в контенте
+            content_id = request.POST.get('content_id')
+            if content_id:
+                content = get_object_or_404(Content, pk=content_id)
+                if len(files) == 1:
+                    content.image1 = file_obj.file.url
+                elif len(files) == 2:
+                    content.image2 = file_obj.file.url
+                elif len(files) == 3:
+                    content.image1 = file_obj.file.url
+                    content.image2 = file_obj.file.url
+                    content.image3 = file_obj.file.url
+                content.save()
+
+    return redirect('pages')
+
+
+def generate_unique_url():
+    characters = string.ascii_letters + string.digits
+    return ''.join(random.choices(characters, k=6))
+
+@login_required
+def update_content_images(request):
+    if request.method == 'POST':
+        content_id = request.POST.get('content_id')
+        if Content.objects.filter(pk=content_id).exists():
+            content = get_object_or_404(Content, pk=content_id)
+            image1 = request.POST.get('image1')
+            image2 = request.POST.get('image2')
+            image3 = request.POST.get('image3')
+
+            # Обновляем изображения в объекте Content
+            content.image1 = image1
+            content.image2 = image2
+            content.image3 = image3
+            content.save()
+
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'error': 'Content matching query does not exist.'})
+
+
+
 
 def content_detail(request, content_id):
     content = get_object_or_404(Content, id=content_id)
+    sub_contents = Content.objects.filter(parent_id=content_id)
+    parent_content = get_object_or_404(Content, id=content_id)
+    return render(request, 'terminal_created.html', {'content': content, 'sub_contents': sub_contents, 'parent_body': parent_content.body})
 
-    return render(request, 'terminal_created.html', {'contents': content})
 
+def content_detail_child(request, parent_id, content_id):
+    content = get_object_or_404(Content, id=content_id)
+    return render(request, 'terminal_created_child.html', {'content': content})
 
+from django.shortcuts import render, redirect, get_object_or_404
+import os
 
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 from .models import Content
 
-def edit_child(request, child_id):
-    child = Content.objects.get(id=child_id)
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Content
+import json
+
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Content
+import json
+
+@login_required
+def edit_content(request):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        content_id = request.POST.get('content_id')
+        new_body = request.POST.get('body')
+        image1 = request.POST.get('image1')
+        image2 = request.POST.get('image2')
+        image3 = request.POST.get('image3')
+
+        content = get_object_or_404(Content, id=content_id)
+        content.body = new_body
+
+        # Сохраняем пути к загруженным файлам
+        content.image1 = image1
+        content.image2 = image2
+        content.image3 = image3
+
+        content.save()
+
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request'})
+
+# def content_list(request):
+#     # Извлекаем все записи из таблицы Content
+#     contents = Content.objects.select_related('author').all()
+#     # Передаем данные в шаблон
+#     return render(request, 'pages.html', {'contents': contents})
+from django.views.generic import ListView
+
+
+class ListContentAndAuthorView(ListView):
+    model = Content
+    template_name = 'pages.html'
+    paginate_by = 1
+    context_object_name = 'items'
+
+    def get_queryset(self):
+        queryset = super().get_queryset().select_related('author')
+        return queryset
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     items = Content.objects.all()
+    #     context['items'] = items
+    #     print(items.errors)
+    #     return context
+
+
+
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import Content
+
+
+@csrf_exempt
+def delete_content(request):
     if request.method == 'POST':
-        title = request.POST.get('title')
-        body = request.POST.get('body')
-        child.title = title
-        child.body = body
-        child.save()
-        return redirect('success_url')  # Перенаправить на страницу успешного сохранения
-    return render(request, 'pages.html', {'child': child})
+        try:
+            data = json.loads(request.body)
+            content_id = data['id']
+            content = Content.objects.get(id=content_id)
+            content.delete()
+            return JsonResponse({'success': True})
+        except Content.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Content not found'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import ContentForm
+from .models import Content
+import random
+import string
+
+def generate_unique_url():
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+
+def create_or_edit_content(request, content_id=None):
+    if content_id:
+        content = get_object_or_404(Content, id=content_id)
+    else:
+        content = None
+
+    if request.method == 'POST':
+        form = ContentForm(request.POST, request.FILES, instance=content)
+        if form.is_valid():
+            content = form.save(commit=False)
+            # Генерация уникального URL
+            content.unique_url = generate_unique_url()
+            content.save()
+            return redirect('pages')  # Замени 'success_url' на URL страницы, которая должна отображаться после успешного сохранения контента
+    else:
+        form = ContentForm(instance=content)
+    return render(request, 'pages.html', {'form': form})

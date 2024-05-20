@@ -209,14 +209,16 @@
 }
 
 .text-career {
-    max-width: 780px;
     margin-top: 200px;
     margin-left: 200px;
     color: #545454;
     font-size: 32px;
     font-weight: 600;
-    text-align: center;
+    text-align: left; /* Изменено с center на left */
+    position: relative;
+    max-width: 500px !important;
 }
+
 
 .career-img {
     margin-top: -280px;

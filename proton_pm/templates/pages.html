@@ -40,7 +40,7 @@
                         <path d="M12.8026 12.3201L14.2755 9.77405C14.3702 9.61623 14.3281 9.41633 14.1913 9.3006L12.6342 8.08016C12.6658 7.8487 12.6868 7.60671 12.6868 7.36473C12.6868 7.12275 12.6658 6.88076 12.6342 6.63878L14.1913 5.41834C14.3281 5.30261 14.3702 5.10271 14.2755 4.94489L12.8026 2.3988C12.7079 2.24098 12.5185 2.17786 12.3502 2.24098L10.5195 2.97745C10.1407 2.68287 9.73043 2.44088 9.27802 2.2515L9.00448 0.30511C8.97291 0.136774 8.8151 0 8.63624 0H5.69035C5.51149 0 5.35367 0.136773 5.32211 0.315631L5.04856 2.26202C4.60668 2.4514 4.18584 2.69339 3.80708 2.98798L1.97642 2.2515C1.80808 2.18838 1.6187 2.2515 1.52401 2.40932L0.0510675 4.95541C-0.0436218 5.11323 -0.0015375 5.31313 0.135236 5.42886L1.69235 6.6493C1.66079 6.88076 1.63975 7.12275 1.63975 7.36473C1.63975 7.60671 1.66079 7.8487 1.69235 8.09068L0.135236 9.31112C-0.0015375 9.42685 -0.0436218 9.62675 0.0510675 9.78457L1.52401 12.3307C1.6187 12.4885 1.80808 12.5516 1.97642 12.4885L3.80708 11.752C4.18584 12.0466 4.59616 12.2886 5.04856 12.478L5.32211 14.4243C5.35367 14.5927 5.51149 14.7295 5.69035 14.7295H8.63624C8.8151 14.7295 8.97291 14.5927 9.00448 14.4138L9.27802 12.4674C9.71991 12.2781 10.1407 12.0361 10.5195 11.7415L12.3502 12.478C12.5185 12.5411 12.7079 12.478 12.8026 12.3201ZM7.16329 9.46894C6.00598 9.46894 5.05908 8.52204 5.05908 7.36473C5.05908 6.20742 6.00598 5.26052 7.16329 5.26052C8.32061 5.26052 9.2675 6.20742 9.2675 7.36473C9.2675 8.52204 8.32061 9.46894 7.16329 9.46894Z" fill="#CCCCCC"/>
                         <path d="M20.9565 17.5386L19.9464 16.76C19.9675 16.6127 19.9885 16.4549 19.9885 16.2971C19.9885 16.1393 19.978 15.9815 19.9464 15.8342L20.9459 15.0556C21.0301 14.982 21.0617 14.8557 20.9986 14.7505L20.0517 13.1197C19.9991 13.0145 19.8728 12.983 19.7571 13.0145L18.5892 13.488C18.3472 13.2986 18.0842 13.1408 17.7896 13.0251L17.6108 11.7836C17.6003 11.6573 17.495 11.5732 17.3898 11.5732H15.5066C15.3908 11.5732 15.2856 11.6573 15.2751 11.7731L15.0962 13.0145C14.8122 13.1408 14.5386 13.2881 14.2966 13.4775L13.1288 13.004C13.0236 12.9619 12.8973 13.004 12.8342 13.1092L11.8873 14.74C11.8347 14.8452 11.8452 14.9714 11.9399 15.0451L12.9394 15.8237C12.9184 15.9709 12.9079 16.1288 12.9079 16.2866C12.9079 16.4444 12.9184 16.6022 12.9394 16.7495L11.9399 17.5281C11.8558 17.6017 11.8242 17.728 11.8873 17.8332L12.8342 19.4639C12.8868 19.5691 13.0131 19.6007 13.1288 19.5691L14.2966 19.0957C14.5386 19.2851 14.8017 19.4429 15.0962 19.5586L15.2751 20.8001C15.2961 20.9158 15.3908 21 15.5066 21H17.3898C17.5056 21 17.6108 20.9158 17.6213 20.8001L17.8002 19.5586C18.0842 19.4324 18.3578 19.2851 18.5892 19.0957L19.7676 19.5691C19.8728 19.6112 19.9991 19.5691 20.0622 19.4639L21.0091 17.8332C21.0722 17.7385 21.0406 17.6122 20.9565 17.5386ZM16.4429 17.7069C15.6644 17.7069 15.0226 17.0757 15.0226 16.2866C15.0226 15.4975 15.6539 14.8662 16.4429 14.8662C17.232 14.8662 17.8633 15.4975 17.8633 16.2866C17.8633 17.0757 17.2215 17.7069 16.4429 17.7069Z" fill="#CCCCCC"/>
                     </svg>                        
-                    <span style="font-weight: 600;">Настройки</span>
+                    <span style="font-weight: 600;" onclick="goToSettings()">Настройки</span>
                 </button>
             </div>
         </div>
@@ -84,7 +84,7 @@
                         </svg>
                         <span style="margin-left: 20px; font-size: 21px;">Добавить раздел</span>
                     </button>
-                    <form method="POST" action="/pages">
+                    <form method="POST" action="/pages/">
                         {% csrf_token %}
                         <div class="expandable-content" id="expandableContent">
                             <input type="text" class="input-section" name="title" placeholder="Введите название раздела...">
@@ -168,7 +168,7 @@
                 </div>
                 <div class="editor-container">
                     <div class="title-container">
-                        <span class="text-edited">Выберите раздел...</span>
+                        <span class="text-edited" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Выберите раздел...</span>
                     </div>
                     <form method="post" action="">
                     <!-- Добавьте иконки сюда -->
@@ -315,16 +315,16 @@
                     <div class="horizontal-line-table" style="margin-top: 67px:"></div>
                     <div class="columns d-flex justify-content-between text-center">
                         <div class="first_col">
-                            <p class="cname">{{ item.author.first_name }} {{ item.author.last_name }}</p>
+                            <p class="cname" style="text-align: center">{{ item.author.first_name }} {{ item.author.last_name }}</p>
                         </div>
                         <div class="second_col">
-                            <p class="cdate">{{ item.created_at|date:"d M Y, H:i" }}</p>
+                            <p class="cdate" style="text-align: center">{{ item.created_at|date:"d M Y, H:i" }}</p>
                         </div>
                         <div class="third_col">
-                            <p class="cchapter">{{ item.title }}</p>
+                            <p class="cchapter" style="text-align: center">{{ item.title }}</p>
                         </div>
                         <div class="fourth_col">
-                            <p class="cmore"><a href="{% url 'content_detail' item.id %}">Подробнее</a></p>
+                            <p class="cmore"><a href="{% url 'content_detail' item.id %}" style="text-align: center">Подробнее</a></p>
                         </div>
                     </div>
                     {% endfor %}
@@ -332,11 +332,11 @@
 
                 {% if is_paginated %}
                     <div class="pagination d-flex justify-content-center" style="margin-top: 100px; margin-bottom: 10px;">
-                    {% for num in paginator.page_range %}
+                    {% for num in page_obj.paginator.page_range %}
                         {% if page_obj.number == num %}
                     <a class="pagination_btn" style="display: flex; align-items: center; justify-content: center; color: #FFFFFF; background-color: var(--color-font)">{{ num }}</a>
                         {% else %}
-                    <a class="pagination_btn"  style="" href="?page={{ num }}">{{ num }}</a>
+                    <a class="pagination_btn" style="" href="?page={{ num }}">{{ num }}</a>
                         {% endif %}
                     {% endfor %}
                     </div>
@@ -363,6 +363,9 @@
         }
         function updatePage() {
             window.location.href = "{% url 'pages' %}";
+        }
+        function goToSettings() {
+            window.location.href = "{% url 'settings' %}";
         }
     </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

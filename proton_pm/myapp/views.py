@@ -1,3 +1,4 @@
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
@@ -37,6 +38,9 @@ def load_photo(request):
 
     # Отрисовываем шаблон с переданным контекстом
     return render(request, 'load_photo.html', context)
+
+
+
 
 
 def profile(request):
@@ -166,6 +170,26 @@ def pages(request):
 
     current_user = request.user
 
+    objects_per_page = 1
+
+    # Создаем объект Paginator для объектов Content
+    paginator = Paginator(all_content, objects_per_page)
+
+    # Получаем номер страницы из GET-параметра или устанавливаем первую страницу по умолчанию
+    page_number = request.GET.get('page', 1)
+
+    try:
+        # Получаем запрошенную страницу
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        # Если номер страницы не является целым числом, отображаем первую страницу
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        # Если номер страницы находится за пределами допустимых значений, отображаем последнюю страницу
+        page_obj = paginator.page(paginator.num_pages)
+
+    objects = Content.objects.all()
+
     # Создаем контекст с данными профиля
     context = {
         'first_name': current_user.first_name,
@@ -176,6 +200,8 @@ def pages(request):
         'valid_parents': valid_parents,
         'all_content': all_content,
         'all_files': all_files,
+        'items': objects,
+        'page_obj': page_obj
     }
 
     # Отображаем страницу с текущими записями контента и загруженными файлами
@@ -215,11 +241,22 @@ def settings(request):
 
             return redirect('settings')  # Перенаправляем обратно на страницу настроек
 
+
     else:
         registration_form = RegistrationForm()
 
+    current_user = request.user
+
+    # Создаем контекст с данными профиля
+    context = {
+        'first_name': current_user.first_name,
+        'last_name': current_user.last_name,
+        'email': current_user.email,
+        'role': 'Администратор' if current_user.is_staff else 'Оператор',
+    }
+
     users = User.objects.all()
-    return render(request, 'settings.html', {'registration_form': registration_form, 'users': users})
+    return render(request, 'settings.html', {'registration_form': registration_form, 'users': users, 'context': context})
 
 @login_required
 def delete_user(request, user_id):
@@ -303,7 +340,8 @@ def content_detail(request, content_id):
 
 def content_detail_child(request, parent_id, content_id):
     content = get_object_or_404(Content, id=content_id)
-    return render(request, 'terminal_created_child.html', {'content': content})
+    parent_content = get_object_or_404(Content, id=content_id)
+    return render(request, 'terminal_created_child.html', {'content': content, 'parent_body': parent_content.body})
 
 from django.shortcuts import render, redirect, get_object_or_404
 import os
@@ -355,26 +393,6 @@ def edit_content(request):
 #     return render(request, 'pages.html', {'contents': contents})
 from django.views.generic import ListView
 
-
-class ListContentAndAuthorView(ListView):
-    model = Content
-    template_name = 'pages.html'
-    paginate_by = 1
-    context_object_name = 'items'
-
-    def get_queryset(self):
-        queryset = super().get_queryset().select_related('author')
-        return queryset
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     items = Content.objects.all()
-    #     context['items'] = items
-    #     print(items.errors)
-    #     return context
-
-
-
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -422,3 +440,22 @@ def create_or_edit_content(request, content_id=None):
     else:
         form = ContentForm(instance=content)
     return render(request, 'pages.html', {'form': form})
+
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+
+@login_required
+@require_POST
+def delete_user(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+        user.delete()
+        return JsonResponse({'status': 'success'}, status=200)
+    except User.DoesNotExist:
+        return JsonResponse({'status': 'user not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)

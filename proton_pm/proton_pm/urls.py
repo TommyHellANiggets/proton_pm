@@ -25,7 +25,7 @@ urlpatterns = [
     path('save_file/', views.save_file, name='save_file'),
     path('delete-content/', views.delete_content, name='delete_content'),
     # path('contents/', views.content_list, name='content_list'),
-    # path('pages', views.ListContentAndAuthorView.as_view(), name='pages')
+    path('delete_user/<int:user_id>/', views.delete_user, name='delete_user'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

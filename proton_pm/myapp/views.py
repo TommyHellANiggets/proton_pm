@@ -8,6 +8,14 @@ def home(request):
     return render(request, 'terminal_hello.html')
 
 
+def button_view(request):
+    contents = Content.objects.all()  # Получаем все записи
+    context = {
+        'contents': contents
+    }
+    return render(request, 'terminal_menu.html', context)
+
+
 def terminal(request):
     # Получаем текущего пользователя
     current_user = request.user
@@ -22,6 +30,21 @@ def terminal(request):
 
     # Отрисовываем шаблон с переданным контекстом
     return render(request, 'terminal.html', context)
+
+def gdfg(request):
+    # Получаем текущего пользователя
+    current_user = request.user
+
+    # Создаем контекст с данными профиля
+    context = {
+        'first_name': current_user.first_name,
+        'last_name': current_user.last_name,
+        'email': current_user.email,
+        'role': 'Администратор' if current_user.is_staff else 'Оператор',
+    }
+
+    # Отрисовываем шаблон с переданным контекстом
+    return render(request, 'authorization.html', context)
 
 
 def load_photo(request):
@@ -38,10 +61,6 @@ def load_photo(request):
 
     # Отрисовываем шаблон с переданным контекстом
     return render(request, 'load_photo.html', context)
-
-
-
-
 
 def profile(request):
     # Получаем текущего пользователя
@@ -83,9 +102,6 @@ def authorization(request):
     # Если запрос не POST, просто рендерим страницу авторизации
     return render(request, 'authorization.html')
 
-
-def terminal_menu(request):
-    return render(request, 'terminal_menu.html')
 
 
 def terminal_career(request):

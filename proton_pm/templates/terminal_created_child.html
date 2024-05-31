@@ -38,11 +38,38 @@
             </div>
         </div>
         <p class="text-career">
-             {{ parent_body }}
+             {{ parent_body|truncatechars:255 }}
         </p>
     </div>
 
-    <img src="{% static 'img/career_img.png' %}" alt="Изображение" class="career-img">
+    <div class="carousel-container2" style="margin-top: 180px; margin-right: 100px">
+        <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-inner" style="max-height: 350px; margin-top: 100p">
+              <div class="carousel-item active">
+                <img src="{% static 'img/carusel_1.jpg' %}" class="d-block w-100" style="x" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="{% static 'img/carusel_2.jpeg' %}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="{% static 'img/carusel_3.jpg' %}" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Предыдущий</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Следующий</span>
+            </button>
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+        </div>
+    </div>
     <div class="auth" onclick="redirectToMenu()">
         <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M23 10.0625H5.50562L13.5413 2.02687L11.5 0L0 11.5L11.5 23L13.5269 20.9731L5.50562 12.9375H23V10.0625Z" fill="#616262"/>

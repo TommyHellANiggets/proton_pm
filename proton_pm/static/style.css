@@ -506,7 +506,7 @@ footer {
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 0 auto;
-    max-width: 440px;
+    max-width: 500px;
   }
   
   .button-container {
@@ -534,7 +534,8 @@ footer {
     padding-right: 50px; /* добавляем отступ справа, чтобы текст не перекрывал правую иконку */
     border-radius: 10px !important;
   }
-  
+
+
   .btn-block-terminal:focus, .btn-block-terminal:active {
     box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1) inset;
     border: 2px solid #0051B9 !important;

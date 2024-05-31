@@ -13,7 +13,6 @@
             position: relative;
             cursor: pointer; /* add cursor style */
         }
-        
 
     </style>
     <link rel="stylesheet" href="{% static 'style-terminal.css' %}">
@@ -26,55 +25,33 @@
         <img src="{% static 'img/logo2.png' %}" alt="Логотип" class="logo">
         <img src="{% static 'img/roscosmos.png' %}" alt="Роскосмос" class="roscosmos">
     </div>
-    <div class="button-container">
-        <button class="button">
-            <div class="left-image" style="background-image: url({% static 'img/predpriyatie.svg' %});"></div>
-            <div class="right-image" style="background-image: url({% static 'img/stripes.svg' %});"></div>
-            <div class="button-text">О ПРЕДПРИЯТИИ</div>
-        </button>
-    
-        <button class="button">
-            <div class="left-image" style="background-image: url({% static 'img/news.svg' %});"></div>
-            <div class="right-image" style="background-image: url({% static 'img/stripes.svg' %});"></div>
-            <div class="button-text">НОВОСТИ</div>
-        </button>
-        
-        <button class="button" onclick="redirectToCareer()">
-            <div class="left-image" style="background-image: url({% static 'img/award.svg' %});"></div>
-            <div class="right-image" style="background-image: url({% static 'img/stripes.svg' %});"></div>
-            <div class="button-text">КАРЬЕРА</div>
-        </button>
-    
-        <button class="button">
-            <div class="left-image" style="background-image: url({% static 'img/bussines.svg' %});"></div>
-            <div class="right-image" style="background-image: url({% static 'img/stripes.svg' %});"></div>
-            <div class="button-text">РУКОВОДСТВО</div>
-        </button>
-        
-        <button class="button">
-            <div class="left-image" style="background-image: url({% static 'img/curriculum.svg' %});"></div>
-            <div class="right-image" style="background-image: url({% static 'img/stripes.svg' %});"></div>
-            <div class="button-text">ВАКАНСИИ</div>
-        </button>
-    
-        <button class="button">
-            <div class="left-image" style="background-image: url({% static 'img/custom.svg' %});"></div>
-            <div class="right-image" style="background-image: url({% static 'img/stripes.svg' %});"></div>
-            <div class="button-text">ОБРАТНАЯ СВЯЗЬ</div>
-        </button>
+   <div class="button-container">
+        {% if contents %}
+            {% for content in contents %}
+                <a href="{% url 'content_detail' content_id=content.id %}" class="button">
+                    <div class="left-image" style="background-image: url({% static 'img/news.svg' %});"></div>
+                    <div class="right-image" style="background-image: url({% static 'img/stripes.svg' %});"></div>
+                    <div class="button-text">{{ content.title }}</div>
+                </a>
+            {% endfor %}
+        {% else %}
+            <p>нет доступного контента</p>
+        {% endif %}
     </div>
+
+
     <div class="carousel-container">
         <p style="font-size: 32px; z-index: 100; color: var(--color-font); font-weight: 700; text-align: center;">ФОТОГАЛЕРЕЯ</p>
         <div id="carouselExampleIndicators" class="carousel slide">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="{% static "img/carusel_1.jpg" %}" class="d-block w-100" alt="...">
+                <img src="{% static 'img/carusel_1.jpg' %}" class="d-block w-100" alt="...">
               </div>
               <div class="carousel-item">
-                <img src="{% static "img/carusel_2.jpeg" %}" class="d-block w-100" alt="...">
+                <img src="{% static 'img/carusel_2.jpeg' %}" class="d-block w-100" alt="...">
               </div>
               <div class="carousel-item">
-                <img src="{% static "img/carusel_3.jpg" %}" class="d-block w-100" alt="...">
+                <img src="{% static 'img/carusel_3.jpg' %}" class="d-block w-100" alt="...">
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
